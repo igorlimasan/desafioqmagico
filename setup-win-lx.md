@@ -70,7 +70,8 @@ Projeto referente ao processo seletivo da Qmagico
      <filter-mapping>
        <filter-name>CorsFilter</filter-name>
        <url-pattern>/*</url-pattern>
-     </filter-mapping>``` (CORS, segurança para todos, desespero para mim)
+     </filter-mapping>``` 
+     (CORS, segurança para todos, desespero para mim)
      após isso botão direito no projeto > run as > run on server > selecione o servidor e clique em run...
      Caso haja algum erro de timeout apenas rode novamente, ele carrega os arquivos restantes...
      assim que terminado, vá ao seu explorador de arquivos, ache o projeto e abra a pasta pages no terminal, no terminal digite ```npm install e após isso, 
