@@ -17,6 +17,14 @@
                     }
                 };
             $(document).ready(function(){
+                if(localStorage.getItem("usuario") === null)
+                {
+                    location.href="/"
+                }
+                $("#logout").click(function(){
+                    localStorage.removeItem("usuario");
+                    location.href="/";
+                });
                 console.log(getUrlParameter("id"));
                 var resposta;
 
@@ -80,7 +88,7 @@
     </head>
     
     <body>
-<nav class="navbar" style="text-align:center;"><h2>Editar Resposta</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>        <div class="row">
+<nav class="navbar" style="text-align:center;"><h2>Editar Resposta</h2><button class="btn btn-danger" id="logout" style="float:right">Logout</button></nav>        <div class="row">
             <div class="form" align="center">
               <!--<form id="fromLogin">-->
                     <div class="col-sm-12">

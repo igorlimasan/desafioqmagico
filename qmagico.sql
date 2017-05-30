@@ -1,5 +1,6 @@
 drop schema if exists qmagico;
 CREATE SCHEMA qmagico DEFAULT CHARACTER SET utf8;
+use qmagico;
 
 create table qmagico.usuario(
 		id int auto_increment,

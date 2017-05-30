@@ -25,6 +25,10 @@
                         }
                 });
             $(document).ready(function(){
+                $("#logout").click(function(){
+                    localStorage.removeItem("usuario");
+                    location.href="/";
+                });
                 $("#btnAdd").click(function(){
 
                      $.ajax({

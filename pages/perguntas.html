@@ -2,8 +2,17 @@
     <head>
         <link rel="import" href="/patterns/head.html">
         <script>
+
+
             $(document).ready(function(){
-                
+                if(localStorage.getItem("usuario") === null)
+                {
+                    location.href="/"
+                }
+                $("#logout").click(function(){
+                    localStorage.removeItem("usuario");
+                    location.href="/";
+                });
                 usuario = JSON.parse(localStorage.getItem('usuario'));
                  $.ajax({
                                 
@@ -115,7 +124,7 @@
     </head>
     
     <body>
-        <nav class="navbar" style="text-align:center;"><h2>Perguntas</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>
+        <nav class="navbar" style="text-align:center;"><h2>Perguntas</h2><button class="btn btn-danger" id="logout" style="float:right">Logout</button></nav>
         <div class="row col-sm-12">
             <a href="nova_pergunta.html"><button class="btn btn-primary">Criar pergunta</button></a>
         </div>

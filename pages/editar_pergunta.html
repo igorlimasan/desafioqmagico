@@ -18,6 +18,14 @@
                     }
                 };
             $(document).ready(function(){
+                 if(localStorage.getItem("usuario") === null)
+                {
+                    location.href="/"
+                }
+                $("#logout").click(function(){
+                    localStorage.removeItem("usuario");
+                    location.href="/";
+                });
                     user = localStorage.getItem("usuario");
                       $.ajax({
                     type: "GET",
@@ -77,7 +85,7 @@
     </head>
     
     <body>
-        <nav class="navbar" style="text-align:center;"><h2>Editar Pergunta</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>
+        <nav class="navbar" style="text-align:center;"><h2>Editar Pergunta</h2><button class="btn btn-danger" id="logout" style="float:right">Logout</button></nav>
         <div class="row">
             <div class="form" align="center">
               <!--<form id="fromLogin">-->
