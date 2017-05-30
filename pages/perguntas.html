@@ -18,22 +18,32 @@
                                         pergunta=data[i];
                                         textPerg = "";
                                            textPerg='<div class="panel panel-default">'+
-                                           '<div class="panel-heading"><h3>'+pergunta.pergunta+'</h3></div><div class="panel-body">';
+                                           '<div class="panel-heading"><h3>'+pergunta.pergunta+'  Usuario: '+pergunta.usuario.nome+'</h3></div><div class="panel-body">';
                                            for( j =0; j< pergunta.resposta.length;j++){
+                                               
                                                resposta = pergunta.resposta[j];
-                                               textPerg+='<div class = "panel-body">'+resposta.respostas+'</div>'
-                                               if(usuario.autorizacoes.id === 1 || usuario.id === resposta.usuario.id){
-                                                   textPerg += '<div class panel-footer><a href="editar_resposta.html"><button class="btn btn-primary">Editar</button></a><a><a href="editar_resposta.html"><button class="btn btn-danger">Apagar</button></a></div>'
+                                               if(resposta.length !== 0 && resposta.respostas !== null)
+                                               {
+                                                   
+                                               
+                                                textPerg+='<div class = "panel-body">'+resposta.usuario.nome+': '+resposta.respostas+'</div>'
+                                                if(usuario.autorizacoes.id === 1 || usuario.id === resposta.usuario.id){
+                                                    textPerg += '<div class panel-footer><a href="editar_resposta.html?id='+resposta.id+'">'+
+                                                    '<button class="btn btn-primary">Editar</button></a><a><a href="javascript:excluirResposta('+resposta.id+','+pergunta.id+')">'+
+                                                    '<button class="btn btn-danger">Apagar</button></a></div>'
+                                                 }
                                                }
                                            }
                                            
                                            
                                            textPerg+='</div><div class="panel-footer">'+
-                                           '<a href="nova_resposta.html?id='+pergunta.id+'"><button onclick="armazenar('+pergunta.id+')" class="btn btn-success">Responder</button></a>';
+                                           '<a href="nova_resposta.html?id='+pergunta.id+'"><button  class="btn btn-success">Responder</button></a>';
 
                                            if(usuario.autorizacoes.id === 1 || pergunta.usuario.id === usuario.id){
 
+                                           textPerg+='<a href="editar_pergunta.html?id="'+pergunta.id+'><button class="btn btn-primary">editar</button></a>';
                                            textPerg+='<a href="javascript:excluir('+pergunta.id+')"><button class="btn btn-danger">Excluir</button></a>';
+                                           
                                            }
 
 
@@ -79,10 +89,10 @@
 
             }
 
-                function excluirResposta(id){
+                function excluirResposta(id,perguntaId){
                      $.ajax({
                     type: "GET",
-                    url: "http://localhost:8080/qmagico/resposta/delete?id="+id,
+                    url: "http://localhost:8080/qmagico/resposta/delete/"+perguntaId+"?id="+id,
                     contentType:"application/json",
                     success: function (data) {
                         console.log(data)
@@ -105,7 +115,7 @@
     </head>
     
     <body>
-        <nav class="navbar" style="text-align:center;"><h2>Perguntas</h2></nav>
+        <nav class="navbar" style="text-align:center;"><h2>Perguntas</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>
         <div class="row col-sm-12">
             <a href="nova_pergunta.html"><button class="btn btn-primary">Criar pergunta</button></a>
         </div>

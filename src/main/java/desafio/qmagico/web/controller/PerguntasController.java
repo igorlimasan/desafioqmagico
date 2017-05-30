@@ -70,7 +70,9 @@ public class PerguntasController {
 	
 	public Perguntas save(@RequestBody Perguntas perguntas, HttpServletResponse response, HttpServletRequest request){
 		
+		
 		for(Resposta r:perguntas.getResposta()){
+			System.out.println(r.getRespostas());
 			if(r.getId() == null){
 			respostaService.salvar(r);
 			}

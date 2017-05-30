@@ -48,9 +48,11 @@ create table qmagico.respostas(
 create table qmagico.perguntas_respostas(
 	fk_perguntas int,
     fk_respostas int,
-    CONSTRAINT fk__perguntas_respostas___fk_perguntas FOREIGN KEY (fk_perguntas) references qmagico.perguntas(id),
-	CONSTRAINT fk__perguntas_respostas___fk_respostas FOREIGN KEY (fk_respostas) references qmagico.respostas(id),
+    CONSTRAINT fk__perguntas_respostas___fk_perguntas FOREIGN KEY (fk_perguntas) references qmagico.perguntas(id) on delete cascade,
+	CONSTRAINT fk__perguntas_respostas___fk_respostas FOREIGN KEY (fk_respostas) references qmagico.respostas(id) on delete cascade,
     CONSTRAINT pk__perguntas_respostas___id PRIMARY KEY (fk_perguntas,fk_respostas)    
 );
+
+
         
         

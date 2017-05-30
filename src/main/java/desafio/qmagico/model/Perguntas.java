@@ -2,6 +2,7 @@ package desafio.qmagico.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,7 @@ public class Perguntas {
 	private Usuario usuario;
 	
 	@JsonView({View.All.class, View.Alternative.class})
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinTable(name = "perguntas_respostas", joinColumns={@JoinColumn(name = "fk_perguntas")},
 	inverseJoinColumns={@JoinColumn(name = "fk_respostas")})
 	private List<Resposta> resposta;

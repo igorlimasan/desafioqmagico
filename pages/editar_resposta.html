@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <link rel="import" href="/patterns/head.html">
+        <script>
+            function getUrlParameter(sParam) {
+                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : sParameterName[1];
+                        }
+                    }
+                };
+            $(document).ready(function(){
+                console.log(getUrlParameter("id"));
+                var resposta;
+
+                 $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/qmagico/resposta/getById?id="+getUrlParameter("id"),
+                    contentType:"application/json",
+                    success: function (data) {
+                      resposta=data;
+                        $("#resposta").val(resposta.respostas)
+                    },
+                    error: function (errormessage) {
+
+                        alertify.error("Puta que pariu");
+                        console.log("não");
+
+                        }
+                });
+
+                $("#btnAdd").click(function(){
+                    if($("#resposta").val().length === 0){
+                        alertify.error("insira a resposta")
+                    }
+                    else{
+
+                            resposta.respostas = $("#resposta").val();
+                           $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost:8080/qmagico/resposta/save",
+                                    data:JSON.stringify(resposta),
+                                    contentType:"application/json",
+                                    success: function (data) {
+                                        
+
+                                            window.location.href = "/perguntas.html";
+
+                                        
+                                    },
+                                    error: function (errormessage) {
+
+                                        
+                                        alertify.error("ERRO");
+
+                                        }
+                            });
+
+                    }
+
+                });
+                   
+
+
+
+
+                
+            
+            });
+
+            
+        </script>
+    </head>
+    
+    <body>
+<nav class="navbar" style="text-align:center;"><h2>Editar Resposta</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>        <div class="row">
+            <div class="form" align="center">
+              <!--<form id="fromLogin">-->
+                    <div class="col-sm-12">
+                        <label for="login">Resposta: <textarea style="width:650px;height:100px;"class="form-control" type="text" id="resposta" name="resposta" placeholder="Insira a resposta aqui..." required></textarea>
+                    
+            
+                <!--</form>-->
+                <div class="col-sm-12">
+                   <a href="perguntas.html"><button class="btn btn-primary">Voltar</button></a> <button class="btn btn-success" id="btnAdd">Salvar</button> 
+                </div> 
+            </div>
+        </div>
+    </body>
+</html>

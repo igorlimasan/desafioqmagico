@@ -36,23 +36,22 @@
                 });
 
                 $("#btnAdd").click(function(){
+                    console.log($("#resposta").val());
                     if($("#resposta").val().length === 0){
                         alertify.error("insira a resposta")
                     }
                     else{
 
-                        pergunta.resposta.push({"respostas":$("resposta").val(),"usuario":JSON.parse(localStorage.getItem("usuario"))});
+                        //pergunta.resposta.push({"respostas":$("resposta").val(),"usuario":JSON.parse(localStorage.getItem("usuario"))});
                            $.ajax({
                                     type: "POST",
-                                    url: "http://localhost:8080/qmagico/pergunta/save",
-                                    data:JSON.stringify(pergunta),
+                                    url: "http://localhost:8080/qmagico/resposta/save/"+getUrlParameter("id"),
+                                    data:JSON.stringify({"id":"","respostas":$("#resposta").val(),"usuario":JSON.parse(localStorage.getItem("usuario"))}),
                                     contentType:"application/json",
                                     success: function (data) {
-                                        for(i =0; i < data.length;i++){
-
                                             window.location.href = "/perguntas.html";
 
-                                        }
+                                        
                                     },
                                     error: function (errormessage) {
 
@@ -79,8 +78,7 @@
     </head>
     
     <body>
-        <nav class="navbar" style="text-align:center;"><h2>Nova Pergunta</h2></nav>
-        <div class="row">
+<nav class="navbar" style="text-align:center;"><h2>Nova Resposta</h2><button class="btn btn-danger" style="float:right">Logout</button></nav>        <div class="row">
             <div class="form" align="center">
               <!--<form id="fromLogin">-->
                     <div class="col-sm-12">
