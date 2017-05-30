@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <link rel="import" href="/patterns/head.html">
+        <script>
+            $(document).ready(function(){
+                
+                usuario = JSON.parse(localStorage.getItem('usuario'));
+                 $.ajax({
+                                
+                                type: "GET",
+                                url: "http://localhost:8080/qmagico/pergunta/getAll",
+                                contentType:"application/json",
+                                success: function (data) {
+                                    if(data.length !== 0){
+                                        
+                                         for(i =0; i < data.length;i++){
+
+                                        pergunta=data[i];
+                                        textPerg = "";
+                                           textPerg='<div class="panel panel-default">'+
+                                           '<div class="panel-heading"><h3>'+pergunta.pergunta+'</h3></div><div class="panel-body">';
+                                           for( j =0; j< pergunta.resposta.length;j++){
+                                               resposta = pergunta.resposta[j];
+                                               textPerg+='<div class = "panel-body">'+resposta.respostas+'</div>'
+                                               if(usuario.autorizacoes.id === 1 || usuario.id === resposta.usuario.id){
+                                                   textPerg += '<div class panel-footer><a href="editar_resposta.html"><button class="btn btn-primary">Editar</button></a><a><a href="editar_resposta.html"><button class="btn btn-danger">Apagar</button></a></div>'
+                                               }
+                                           }
+                                           
+                                           
+                                           textPerg+='</div><div class="panel-footer">'+
+                                           '<a href="nova_resposta.html?id='+pergunta.id+'"><button onclick="armazenar('+pergunta.id+')" class="btn btn-success">Responder</button></a>';
+
+                                           if(usuario.autorizacoes.id === 1 || pergunta.usuario.id === usuario.id){
+
+                                           textPerg+='<a href="javascript:excluir('+pergunta.id+')"><button class="btn btn-danger">Excluir</button></a>';
+                                           }
+
+
+                                           textPerg+='</div></div>';
+
+                                           $("#panelDiv").append(textPerg);
+
+                                        }
+                                        
+                                    }                                    
+                                },
+                                error: function (errormessage) {
+
+                                    
+                                    console.log("não");
+
+                                    }
+                        });
+
+
+               
+
+               
+            });
+
+            function excluir(id){
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/qmagico/pergunta/delete?id="+id,
+                    contentType:"application/json",
+                    success: function (data) {
+                        console.log(data)
+                        alertify.warning("excluida");
+                        window.location.href = "/perguntas.html";
+                    },
+                    error: function (errormessage) {
+
+                        alertify.error("Puta que pariu");
+                        console.log("não");
+
+                        }
+                });
+
+            }
+
+                function excluirResposta(id){
+                     $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/qmagico/resposta/delete?id="+id,
+                    contentType:"application/json",
+                    success: function (data) {
+                        console.log(data)
+                        alertify.warning("excluida");
+                        window.location.href = "/perguntas.html";
+                    },
+                    error: function (errormessage) {
+
+                        alertify.error("Puta que pariu");
+                        console.log("não");
+
+                        }
+                });
+                   
+                    
+                    
+                }
+            
+        </script>
+    </head>
+    
+    <body>
+        <nav class="navbar" style="text-align:center;"><h2>Perguntas</h2></nav>
+        <div class="row col-sm-12">
+            <a href="nova_pergunta.html"><button class="btn btn-primary">Criar pergunta</button></a>
+        </div>
+        <div class="row col-sm-12">
+            <div class="container">
+                <div class="panel-group" id="panelDiv">
+                   
+                    
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+    </body>
+</html>

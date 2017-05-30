@@ -1,0 +1,14 @@
+nav {
+    display: block;
+    padding: 15px;
+    background: #ededed;
+}
+
+.form {
+	width: 100%;
+}
+
+.form form {
+	width: 100%;
+	margin: 0 auto;
+}

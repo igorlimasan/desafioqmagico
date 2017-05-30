@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <link rel="import" href="/patterns/head.html">
+        <script>
+
+            var logins = [];
+            $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8080/qmagico/usuario/getAll",
+                    contentType:"application/json",
+                    success: function (data) {
+                        for(i =0; i < data.length;i++){
+
+                            user=data[i];
+                            console.log(user.login);
+                            logins.push(user.login);
+
+                        }
+                    },
+                    error: function (errormessage) {
+
+                        alertify.error("Puta que pariu");
+                        console.log("não");
+
+                        }
+                });
+            $(document).ready(function(){
+                $("#btnAdd").click(function(){
+
+                     $.ajax({
+                                type: "GET",
+                                url: "http://localhost:8080/qmagico/usuario/getAll",
+                                contentType:"application/json",
+                                success: function (data) {
+                                    for(i =0; i < data.length;i++){
+
+                                        user=data[i];
+                                        console.log(user.login);
+                                        logins.push(user.login);
+
+                                    }
+                                },
+                                error: function (errormessage) {
+
+                                    
+                                    console.log("não");
+
+                                    }
+                        });
+                    if($("#login").val().length === 0 || $("#senha").val().length === 0 || $("#nome").val().length === 0 || $("#tipo").val() === ""){
+                       alertify.error("Preencha os campos")
+                   }
+                   else if($.inArray($("#login").val(),logins) !== -1){
+                       alertify.error("Login já está sendo utilizado");
+                       $("#login").val('');
+                       $("#login").focus();
+
+                   }
+                   else{
+                       var aut = $("#tipo").val() === "1" ? "ROLE_ADMIN" : "ROLE_STUDENT";
+                        var usuario = {
+                            "id":"",
+                            "login":$("#login").val(),
+                            "senha":$("#senha").val(),
+                            "nome":$("#nome").val(),
+                            "autorizacoes":[{
+                                    "id":$("#tipo").val(),
+                                    "nome": aut
+
+                                }]
+                            };
+                            console.log(usuario);
+                            $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost:8080/qmagico/usuario/save",
+                                    data: JSON.stringify(usuario),
+                                    contentType:"application/json",
+                                    success: function (msg) {
+                                    alertify.success("Usuario Cadastrado");
+                                    window.location = "/";
+                                    
+
+                                    
+                                    
+                                    },
+                                    error: function (errormessage) {
+
+                                        alertify.error("Puta que pariu");
+                                        console.log("não");
+
+                                        }
+                             });
+
+                   }});
+            });
+
+            
+        </script>
+    </head>
+    
+    <body>
+        <nav class="navbar" style="text-align:center;"><h2>Fórum</h2></nav>
+        <div class="row">
+            <div class="form" align="center">
+              <!--<form id="fromLogin">-->
+                    <div class="col-sm-12">
+                        <label for="login">Nome: <input class="form-control" type="text" id="nome" name="nome" placeholder="Nome" required/>
+                    </div>
+                     <div class="col-sm-12">
+                        <label for="login">Login: <input class="form-control" type="text" id="login"  name="username" placeholder="Login" required/>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="login">Senha: <input class="form-control" type="password" id="senha" name="password" placeholder="Senha" required/>
+                    </div>
+                    <div>
+                            <label for="login">Tipo de usuario: 
+                            <select nome="tipo" class="form-control" id="tipo" required>
+                                <option value="">Selecione</option>
+                                <option value="1">Administrador</option>
+                                <option value="2">Estudante</option>
+                            </select>
+                    </div>
+            
+                <!--</form>-->
+                   <a href="/"><button class="btn btn-primary">Voltar</button></a> <button class="btn btn-success" id="btnAdd">Adicionar</button> 
+                    
+            </div>
+        </div>
+    </body>
+</html>

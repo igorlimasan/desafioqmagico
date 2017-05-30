@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <link rel="import" href="/patterns/head.html">
+        <script>
+            $(document).ready(function(){
+                $("#btnLogin").click(function(){
+                    if($("#login").val().length === 0 || $("#senha").val().length === 0){
+                       alertify.error("Preencha os campos")
+                   }
+                   else{
+                        var login = {
+                            "username":$("#login").val(),
+                            "password":$("#senha").val()
+                            };
+                            $.ajax({
+                                    type: "POST",
+                                    url: "http://localhost:8080/qmagico/login",
+                                    data: JSON.stringify(login),
+                                    contentType:"application/json",
+                                    success: function (user) {
+                                        alertify.success("Usuario Logado: "+user.nome);
+                                        console.log(user);
+                                        localStorage.removeItem("usuario");
+                                        localStorage.setItem("usuario",JSON.stringify(user));
+                                        console.log(localStorage.getItem("usuario"));
+                                      
+
+                                    },
+                                    error: function (errormessage) {
+
+                                        alertify.error("Login ou senha incorretos");
+                                        //console.log("não");
+                                        
+
+                                        }
+                             });
+
+                   }});
+            });
+
+            
+        </script>
+    </head>
+    
+    <body>
+        <nav class="navbar" style="text-align:center;"><h2>Fórum</h2></nav>
+        <div class="row">
+            <div class="form" align="center">
+              <!--<form id="fromLogin">-->
+                    <div class="col-sm-12">
+                        <label for="login">Login: <input class="form-control" type="text" id="login" name="username" placeholder="Login" required/>
+                    </div>
+                     <div class="col-sm-12">
+                        <label for="login">Senha: <input class="form-control" type="password" id="senha" name="password" placeholder="Senha" required/>
+                    </div>
+            
+                <!--</form>-->
+                    <button class="btn btn-success" id="btnLogin">Login</button> 
+                    <a href="cadastro.html"><button id="btnCadastro"  class="btn btn-primary" >Cadastre-se</button></a>
+            </div>
+        </div>
+    </body>
+</html>
