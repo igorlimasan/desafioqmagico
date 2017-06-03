@@ -42,7 +42,7 @@ Projeto referente ao processo seletivo da Qmagico
     selecione ele procure pelo arquivo pom.xml> botão direito >run as> maven install, após concluir,
     procure o arquivo resources>applicationContext.xml e webapp>WEB-INF>applicationContext.xml e altere as informações de conexão de acordo com o banco de dados (usuario e senha)
     feito tudo isso hora de criar o servidor, abaixo selecione Servers e clique na mensagem exibida (ou botão direito> new) selecione a pasta de download do tomcat (aquela que eu falei que era para baixar, pois facilitava)
-    após criado, volte ao navigator, abra a pasta  Servers e selecione Tomcatblablablab ou o nome dado>web.xml e cole as seguintes informações após a primeiro bloco de comentários
+    após criado, volte ao navigator, abra a pasta  Servers e selecione Tomcat ou o nome do servidor criado >web.xml e cole as seguintes informações após a primeiro bloco de comentários
     ```<filter>
        <filter-name>CorsFilter</filter-name>
        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
